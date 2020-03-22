@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sultan_delivery/Screens/MainScreen.dart';
+import 'package:sultan_delivery/services/location_service.dart';
 import 'package:sultan_delivery/utilties/TextStyles.dart';
 import 'package:sultan_delivery/utilties/RequestsAPI.dart';
 import 'package:sultan_delivery/utilties/util.dart';
@@ -21,7 +22,7 @@ class _TransformFoodsState extends State<TransformFoods> {
   RequestAPI _requestAPI = new RequestAPI();
 
   bool checkboxvalue = false;
-  String checkboxText = '';
+  String checkboxText = "دیاری کردنی ناونیشانی ئێستا";
 
   final List requests;
 
@@ -140,7 +141,7 @@ class _TransformFoodsState extends State<TransformFoods> {
                   ),
                   Container(
                     child: Text(
-                      "دیاری کردنی ناونیشانی ئێستا",
+                      checkboxText,
                       style: TextStyle(color: Colors.amber, fontSize: 18),
                     ),
                   ),
@@ -269,17 +270,23 @@ class _TransformFoodsState extends State<TransformFoods> {
     );
   }
 
+  LocationService userLocation = LocationService();
+
   void something() {
-    setState(() {
-      if (checkboxvalue) {
-        checkboxText = "ناونیشانەکەت بەسەرکەوتویی دیاری کرا !";
-        //  alarmLocation(checkboxText );
-        checkboxvalue = !checkboxvalue;
-      } else {
-        checkboxText = "تکایە چاوەڕوانبە ، ئێستا ناونیشانەکەت دیاری دەکرێت";
-        //  alarmLocation(checkboxText );
-        checkboxvalue = !checkboxvalue;
-      }
+    userLocation.getLocation().then((location) {
+      print('Location: Lat${location.latitude}, Long: ${location?.longitude}');
+      setState(() {
+        if (!checkboxvalue) {
+          // ignore: unnecessary_statements
+          checkboxText = "ناونیشانەکەت بەسەرکەوتویی دیاری کرا !";
+          //  alarmLocation(checkboxText );
+          checkboxvalue = !checkboxvalue;
+        } else {
+          checkboxText = "دیاری کردنی ناونیشانی ئێستا";
+          //  alarmLocation(checkboxText );
+          checkboxvalue = !checkboxvalue;
+        }
+      });
     });
   }
 
