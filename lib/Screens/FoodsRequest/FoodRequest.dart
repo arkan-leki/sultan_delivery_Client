@@ -17,6 +17,15 @@ class _FoodRequestState extends State<FoodRequest> {
 
   List<String> requests = List();
 
+  var list;
+
+  @override
+  void initState() {
+    setState(() {
+      _requestAPI.fetchalldataById(phoneid);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +63,7 @@ class _FoodRequestState extends State<FoodRequest> {
                 direction: Axis.horizontal,
                 children: <Widget>[
                   FutureBuilder(
-                      future: _requestAPI.fetchalldataById(phoneid),
+                      future: list,
                       builder: (context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState == ConnectionState.done &&
                             snapshot.hasData) {
@@ -64,10 +73,8 @@ class _FoodRequestState extends State<FoodRequest> {
                               itemBuilder: (context, index) {
                                 RequestDetail reuqest = snapshot.data[index];
                                 requests.add(reuqest.id);
-                                return _detailesOFFoodRequest(
-                                    reuqest.foodTitle,
-                                    reuqest.quantity,
-                                    reuqest.totalPrice);
+                                return _detailesOFFoodRequest(reuqest.foodTitle,
+                                    reuqest.quantity, reuqest.totalPrice);
                               });
                         } else if (snapshot.hasError) {
                           throw snapshot.error;
@@ -111,8 +118,7 @@ class _FoodRequestState extends State<FoodRequest> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    TransformFoods(requests)),
+                                builder: (context) => TransformFoods(requests)),
                           );
                         },
                       ),
@@ -211,8 +217,6 @@ class _FoodRequestState extends State<FoodRequest> {
       );
     }
   }
-
-
 
   Widget _drawDivider() {
     return Container(

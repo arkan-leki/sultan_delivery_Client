@@ -48,7 +48,7 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
                                     request.foodTitle,
                                     request.quantity,
                                     request.totalPrice,
-                                    request.id),
+                                    request.food),
                               ),
                             ],
                           );

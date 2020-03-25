@@ -47,6 +47,7 @@ class RequestAPI {
       requests.add(_request);
       phoneid = data['phoneid'];
     } else {
+      print(response.body);
       throw response.statusCode;
     }
   }

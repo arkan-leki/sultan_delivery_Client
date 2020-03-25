@@ -318,7 +318,7 @@ class _DetilesFoodsRequestState extends State<DetilesFoodsRequest> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => FoodRequest()),
+                          builder: (context) => new FoodRequest()),
                     );
                   },
                 ),
