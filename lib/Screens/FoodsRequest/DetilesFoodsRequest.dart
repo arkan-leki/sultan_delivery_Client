@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
@@ -314,12 +315,7 @@ class _DetilesFoodsRequestState extends State<DetilesFoodsRequest> {
                     requestsMap['drinks'] = _selecteDrinks;
                     requestsMap['total_price'] = _price.toString();
                     requestsMap['phoneid'] = phoneid;
-                    _requestAPI.insertdata(requestsMap);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => new FoodRequest()),
-                    );
+                    _requestAPI.insertdata(requestsMap).whenComplete(push);
                   },
                 ),
               ],
@@ -327,6 +323,14 @@ class _DetilesFoodsRequestState extends State<DetilesFoodsRequest> {
           ),
         ],
       ),
+    );
+  }
+
+  FutureOr Function() push() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => new FoodRequest()),
     );
   }
 }

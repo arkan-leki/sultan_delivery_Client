@@ -48,7 +48,8 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
                                     request.foodTitle,
                                     request.quantity,
                                     request.totalPrice,
-                                    request.food),
+                                    request.food,
+                                    request.id),
                               ),
                             ],
                           );
@@ -66,7 +67,7 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
   }
 
   Widget _detailesOFFoodRequest(String nameoffood, String countoffoodNum,
-      String priceoffood, String foodId) {
+      String priceoffood, String foodId, String id) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -105,7 +106,7 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
               color: Colors.red,
               onPressed: () {
                 setState(() {
-                  _requestAPI.deleteWithURl(foodId);
+                  _requestAPI.deleteWithURl(id);
                 });
               },
             ),

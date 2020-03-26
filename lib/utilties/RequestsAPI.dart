@@ -109,10 +109,15 @@ class RequestAPI {
   Future deleteWithURl(String id) async {
     final baseUrl = apibse;
     final url = Uri.parse(baseUrl + "request_details/$id/");
+    print(url);
     var response =
         await http.delete(url);
-    if (response.statusCode != 200)
+    print(response.body);
+    if (response.statusCode != 200){
       return Future.error("error: status code ${response.statusCode}");
+    }else{
+      print(response.body);
+    }
   }
 
 

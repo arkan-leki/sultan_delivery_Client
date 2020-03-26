@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sultan_delivery/Screens/data/Request.dart';
 import 'package:sultan_delivery/Screens/transformfoods/TransformFoods.dart';
@@ -21,9 +22,7 @@ class _FoodRequestState extends State<FoodRequest> {
 
   @override
   void initState() {
-    setState(() {
-      _requestAPI.fetchalldataById(phoneid);
-    });
+    list = _requestAPI.fetchalldataById(phoneid);
     super.initState();
   }
 
@@ -62,26 +61,29 @@ class _FoodRequestState extends State<FoodRequest> {
               child: Wrap(
                 direction: Axis.horizontal,
                 children: <Widget>[
-                  FutureBuilder(
-                      future: list,
-                      builder: (context, AsyncSnapshot snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData) {
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                RequestDetail reuqest = snapshot.data[index];
-                                requests.add(reuqest.id);
-                                return _detailesOFFoodRequest(reuqest.foodTitle,
-                                    reuqest.quantity, reuqest.totalPrice);
-                              });
-                        } else if (snapshot.hasError) {
-                          throw snapshot.error;
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      }),
+                  RefreshIndicator(
+                    child: FutureBuilder(
+                        future: list,
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done &&
+                              snapshot.hasData) {
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  RequestDetail reuqest = snapshot.data[index];
+                                  requests.add(reuqest.id);
+                                  return _detailesOFFoodRequest(reuqest.foodTitle,
+                                      reuqest.quantity, reuqest.totalPrice);
+                                });
+                          } else if (snapshot.hasError) {
+                            throw snapshot.error;
+                          } else {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        }),
+                      onRefresh: refreshList,
+                  ),
                   _sumallpriceWidget(),
                 ],
               ),
@@ -224,5 +226,13 @@ class _FoodRequestState extends State<FoodRequest> {
       height: 0.5,
       color: Colors.grey.shade500,
     );
+  }
+
+  Future<Null> refreshList() async{
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {
+      list =  _requestAPI.fetchalldataById(phoneid);
+    });
+    return null;
   }
 }
