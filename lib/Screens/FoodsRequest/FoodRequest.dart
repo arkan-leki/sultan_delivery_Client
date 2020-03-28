@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sultan_delivery/Screens/data/Request.dart';
@@ -116,8 +118,8 @@ class _FoodRequestState extends State<FoodRequest> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32),
                         ),
-                        onPressed: () {
-                          Navigator.push(
+                        onPressed: () async {
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => TransformFoods(requests)),
@@ -138,6 +140,7 @@ class _FoodRequestState extends State<FoodRequest> {
   Widget _detailesOFFoodRequest(
       String nameoffood, String countoffoodNum, String priceoffood) {
     return Container(
+      height: 50,
       padding: EdgeInsets.only(left: 10, right: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,4 +238,5 @@ class _FoodRequestState extends State<FoodRequest> {
     });
     return null;
   }
+
 }

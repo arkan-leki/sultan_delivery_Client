@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
@@ -87,11 +88,8 @@ class _TransformFoodsState extends State<TransformFoods> {
             requestsMap['total_price'] = price;
             requestsMap['request_detail'] = requests;
             requestsMap['phoneid'] = phoneid;
-            _requestAPI.insertdataTransForm(requestsMap, requests);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MainScrreen()),
-            );
+            _requestAPI.insertdataTransForm(requestsMap, requests).whenComplete(push);
+
           },
         ),
       ),
@@ -319,5 +317,12 @@ class _TransformFoodsState extends State<TransformFoods> {
     _requestAPI.fetchalldataByprice(phoneid).then((o) {
       price = o;
     });
+  }
+
+  FutureOr push() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MainScrreen()),
+    );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sultan_delivery/Screens/FoodsRequest/DetilesFoodsRequest.dart';
 import 'package:sultan_delivery/Screens/data/Request.dart';
@@ -100,19 +102,24 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
               style: stylepriceoffoodRequest,
             ),
             IconButton(
+              tooltip: "$id",
               icon: Icon(
                 Icons.restore_from_trash,
               ),
               color: Colors.red,
               onPressed: () {
-                setState(() {
-                  _requestAPI.deleteWithURl(id);
-                });
+                  _requestAPI.deleteWithURl(id).whenComplete(refresh);
               },
             ),
           ],
         ),
       ],
     );
+  }
+
+  FutureOr refresh() {
+    setState(() {
+
+    });
   }
 }
