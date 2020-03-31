@@ -38,13 +38,13 @@ class FoodAPI {
       for (var data in jsonResponse) {
         if (data['is_dispriced']) {
           Food cat = new Food(
-              data['id'],
-              data['image'],
-              data['price'],
-              data['disprice'],
-              data['title'],
-              data['subtitle'],
-              data['detiles'],
+              data['id'].toString(),
+              data['image'].toString(),
+              data['price'].toString(),
+              data['disprice'].toString(),
+              data['title'].toString(),
+              data['subtitle'].toString(),
+              data['detiles'].toString(),
               data['is_dispriced']);
           foods.add(cat);
         }

@@ -1,19 +1,24 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:sultan_delivery/Screens/data/Drink.dart';
-import 'package:sultan_delivery/utilties/DrinksAPI.dart';
+import 'package:sultan_delivery/Screens/data/Specify.dart';
+import 'package:sultan_delivery/utilties/SpecifyAPI.dart';
 import 'package:sultan_delivery/utilties/TextStyles.dart';
 import 'package:sultan_delivery/utilties/global_var.dart';
 
 class TaybatmandeChildrenFoods extends StatefulWidget {
+  final String
+  foodId; // <--- generates the error, "Field doesn't override an inherited getter or setter"
+  TaybatmandeChildrenFoods(String foodId) : this.foodId = foodId;
   @override
   _TaybatmandeChildrenFoodsState createState() =>
-      _TaybatmandeChildrenFoodsState();
+      _TaybatmandeChildrenFoodsState(foodId);
 }
 
 class _TaybatmandeChildrenFoodsState extends State<TaybatmandeChildrenFoods> {
-  DrinkAPI _drinkAPI = new DrinkAPI();
+  SpecifyAPI _drinkAPI = new SpecifyAPI();
+
+  String foodId;
+  _TaybatmandeChildrenFoodsState(this.foodId);
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +37,13 @@ class _TaybatmandeChildrenFoodsState extends State<TaybatmandeChildrenFoods> {
           body: Container(
             color: BackgroundColor,
             child: FutureBuilder(
-                future: _drinkAPI.fetchalldata(),
+                future: _drinkAPI.fetchalldata(foodId),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
-                        Drink drink = snapshot.data[index];
+                        Specify specify = snapshot.data[index];
                         return Wrap(
                           children: <Widget>[
                             Padding(
@@ -47,7 +52,7 @@ class _TaybatmandeChildrenFoodsState extends State<TaybatmandeChildrenFoods> {
                                 right: 16,
                               ),
                               child:
-                                  _DetailesOFFoodRequest(drink.id, drink.title),
+                                  _DetailesOFFoodRequest(specify.id, specify.title),
                             ),
                           ],
                         );

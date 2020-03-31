@@ -217,7 +217,7 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
               Icons.more_vert,
             ),
             color: Colors.white,
-            onPressed: _taybarmandechildrenfoods,
+            onPressed: (){_taybarmandechildrenfoods(foodId);},
           ),
         ],
       ),
@@ -391,10 +391,10 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
     });
   }
 
-  void _taybarmandechildrenfoods() {
+  void _taybarmandechildrenfoods(String id) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TaybatmandeChildrenFoods()),
+      MaterialPageRoute(builder: (context) => TaybatmandeChildrenFoods(id)),
     );
   }
 }
