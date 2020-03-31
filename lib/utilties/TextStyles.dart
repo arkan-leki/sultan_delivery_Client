@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Color iconsColor = Colors.amber;
-Color appbarColor = Colors.amber;
-Color iconsColorOtherWidegt = Colors.black;
-Color iconsColorFoodRequest = Colors.white;
-Color backgroundColor = Colors.grey.shade900;
+Color IconsColor = Colors.amber;
+Color AppbarColor = Colors.amber;
+Color IconsColorOtherWidegt = Colors.black;
+Color IconsColorFoodRequest = Colors.white;
+Color BackgroundColor = Colors.grey.shade900;
 
 TextStyle titleStyle = new TextStyle(
     //  fontFamily: 'Helvetica',
@@ -20,10 +20,20 @@ TextStyle titleStyleFoodRequest = new TextStyle(
     //  fontFamily: 'Helvetica',
     color: Colors.white,
     fontSize: 20);
+
+TextStyle TabBarStyle = new TextStyle(
+    //  fontFamily: 'Helvetica',
+    color: Colors.black,
+    fontSize: 18);
+
 TextStyle titleStyleNewPric = new TextStyle(
     fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20);
 TextStyle titleStyleDescont = new TextStyle(
     decoration: TextDecoration.lineThrough, color: Colors.amber, fontSize: 16);
+
+TextStyle titleStyleHomeScreen =
+    new TextStyle(color: Colors.black, fontSize: 24);
+
 TextStyle titleStyleNewFood = new TextStyle(color: Colors.amber, fontSize: 24);
 
 TextStyle subtitleStyleNewFood = new TextStyle(
@@ -35,11 +45,22 @@ TextStyle detilesStyleNewFood = new TextStyle(
   letterSpacing: 1,
   fontSize: 14,
 );
-TextStyle stylecountoffoodRequest = new TextStyle(
+
+TextStyle detilesStyleParentFoods = new TextStyle(
+  color: Colors.grey.shade400,
+  fontSize: 14,
+);
+
+TextStyle titleParentFoodsKU = new TextStyle(
+  color: Colors.white,
+  fontSize: 20,
+);
+
+TextStyle StylecountoffoodRequest = new TextStyle(
   color: Colors.white,
   fontSize: 12,
 );
-TextStyle priceFoods = new TextStyle(
+TextStyle PriceFoods = new TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.bold,
   fontSize: 22,
@@ -51,14 +72,14 @@ TextStyle disPriceFoods = new TextStyle(
   fontSize: 20,
 );
 
-TextStyle oldPriceFoods = new TextStyle(
+TextStyle OldPriceFoods = new TextStyle(
   color: Colors.amber,
   decoration: TextDecoration.lineThrough,
   fontWeight: FontWeight.bold,
-  fontSize: 16,
+  fontSize: 18,
 );
 
-TextStyle stylepriceoffoodRequest = new TextStyle(
+TextStyle StylepriceoffoodRequest = new TextStyle(
   color: Colors.amber,
   fontSize: 14,
 );
@@ -72,7 +93,7 @@ TextStyle testButtonStulefoodRequest = new TextStyle(
   color: Colors.white,
   fontSize: 18,
 );
-TextStyle nameOFFoodRequest = new TextStyle(
+TextStyle NameOFFoodRequest = new TextStyle(
   color: Colors.yellowAccent,
   fontSize: 20,
 );

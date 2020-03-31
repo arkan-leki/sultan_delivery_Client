@@ -24,14 +24,6 @@ class _AboutSultanState extends State<AboutSultan> {
               style: titleStyle,
             ),
             centerTitle: false,
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(
-                    Icons.home,
-                    color: iconsColor,
-                  ),
-                  onPressed: () {}),
-            ],
           ),
           drawer: NavegationDrawer(),
           body: Container(

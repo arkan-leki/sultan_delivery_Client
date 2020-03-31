@@ -110,37 +110,47 @@ class RequestAPI {
     final baseUrl = apibse;
     final url = Uri.parse(baseUrl + "request_details/$id/");
     print(url);
-    var response =
-        await http.delete(url);
+    var response = await http.delete(url);
     print(response.body);
-    if (response.statusCode != 200){
+    if (response.statusCode != 200) {
       return Future.error("error: status code ${response.statusCode}");
-    }else{
+    } else {
       print(response.body);
     }
   }
 
+  Future addFoodRequest(String id ,String counter,price) async {
+    final baseUrl = apibse;
+    final url = Uri.parse(baseUrl + "request_details/$id/");
+    HashMap<String, dynamic> requestsMap = new HashMap();
+    requestsMap['quantity'] = counter;
+    requestsMap['total_price'] = price;
+    var response = await http.patch(url, body: requestsMap);
+    if (response.statusCode != 200)
+      return Future.error("error: status code ${response.statusCode}");
+  }
 
   Future editeFoodRequest(String id) async {
     final baseUrl = apibse;
     final url = Uri.parse(baseUrl + "request_details/$id/");
     HashMap<String, dynamic> requestsMap = new HashMap();
     requestsMap['status'] = true;
-    var response =
-    await http.patch(url, body: {'status': 'true'});
+    var response = await http.patch(url, body: requestsMap);
     if (response.statusCode != 200)
       return Future.error("error: status code ${response.statusCode}");
   }
 
-  Future insertdataTransForm(HashMap<String, dynamic> requestsMap, List requests) async {
+  Future insertdataTransForm(
+      HashMap<String, dynamic> requestsMap, List requests) async {
     print(requestsMap);
     var url = apibse + "requests/";
     var response = await http.post(url,
-        headers: {"Content-Type": "application/json"}, body: jsonEncode(requestsMap));
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(requestsMap));
     if (response.statusCode == 201) {
       var data = convert.jsonDecode(utf8.decode(response.bodyBytes));
-      for(String ids in requests) {
-       editeFoodRequest(ids);
+      for (String ids in requests) {
+        editeFoodRequest(ids);
       }
       phoneid = data['phoneid'];
     } else {

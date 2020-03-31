@@ -1,7 +1,7 @@
-import 'package:sultan_delivery/Screens/data/Food.dart';
 import 'dart:convert' as convert;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../Screens/data/Food.dart';
 import 'util.dart';
 
 class FoodAPI {
@@ -13,8 +13,15 @@ class FoodAPI {
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(utf8.decode(response.bodyBytes));
       for (var data in jsonResponse) {
-        Food cat = new Food(data['id'], data['image'], data['price'],
-            data['disprice'], data['title'], data['subtitle'], data['detiles']);
+        Food cat = new Food(
+            data['id'],
+            data['image'],
+            data['price'],
+            data['disprice'],
+            data['title'],
+            data['subtitle'],
+            data['detiles'],
+            data['is_dispriced']);
         foods.add(cat);
       }
     }
@@ -37,7 +44,8 @@ class FoodAPI {
               data['disprice'],
               data['title'],
               data['subtitle'],
-              data['detiles']);
+              data['detiles'],
+              data['is_dispriced']);
           foods.add(cat);
         }
       }
@@ -45,16 +53,22 @@ class FoodAPI {
     return foods;
   }
 
-  Future fetchalldataById(int catId) async {
+  Future fetchalldataById(String catId) async {
     String allCatAPI = apibse + foodz + "&category_id=$catId";
     List<Food> foods = List<Food>();
-
     var response = await http.get(allCatAPI);
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(utf8.decode(response.bodyBytes));
       for (var data in jsonResponse) {
-        Food cat = new Food(data['id'], data['image'], data['price'],
-            data['disprice'], data['title'], data['subtitle'], data['detiles']);
+        Food cat = new Food(
+            data['id'].toString(),
+            data['image'].toString(),
+            data['price'].toString(),
+            data['disprice'].toString(),
+            data['title'].toString(),
+            data['subtitle'].toString(),
+            data['detiles'].toString(),
+            data['is_dispriced']);
         foods.add(cat);
       }
     }
@@ -69,8 +83,15 @@ class FoodAPI {
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(utf8.decode(response.bodyBytes));
       for (var data in jsonResponse) {
-        Food cat = new Food(data['id'], data['image'], data['price'],
-            data['disprice'], data['title'], data['subtitle'], data['detiles']);
+        Food cat = new Food(
+            data['id'],
+            data['image'],
+            data['price'],
+            data['disprice'],
+            data['title'],
+            data['subtitle'],
+            data['detiles'],
+            data['is_dispriced']);
         foods.add(cat);
       }
     }
@@ -85,15 +106,16 @@ class FoodAPI {
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(utf8.decode(response.bodyBytes));
       for (var data in jsonResponse) {
-        if (favorites.contains(data['id'])) {
+        if (favorites.contains(data['id'].toString())) {
           Food cat = new Food(
-              data['id'],
-              data['image'],
-              data['price'],
-              data['disprice'],
-              data['title'],
-              data['subtitle'],
-              data['detiles']);
+              data['id'].toString(),
+              data['image'].toString(),
+              data['price'].toString(),
+              data['disprice'].toString(),
+              data['title'].toString(),
+              data['subtitle'].toString(),
+              data['detiles'].toString(),
+              data['is_dispriced']);
           foods.add(cat);
         }
       }

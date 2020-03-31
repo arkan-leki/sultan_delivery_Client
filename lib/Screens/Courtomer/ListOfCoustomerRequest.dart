@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sultan_delivery/Screens/data/CoustDetiles.dart';
-import 'package:sultan_delivery/Screens/data/TransformFood.dart';
 import 'package:sultan_delivery/utilties/TextStyles.dart';
 
 class ListOfCoustomerRequest extends StatefulWidget {
-  final TransformFood transform;
-  ListOfCoustomerRequest(TransformFood transform) : this.transform = transform;
-
   @override
-  _ListOfCoustomerRequestState createState() =>
-      _ListOfCoustomerRequestState(transform);
+  _ListOfCoustomerRequestState createState() => _ListOfCoustomerRequestState();
 }
 
 class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
   CoustDetiles coustdetiles;
-  final TransformFood transform;
-
-  _ListOfCoustomerRequestState(this.transform);
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -25,36 +16,53 @@ class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
         direction: Axis.horizontal,
         children: <Widget>[
           Card(
-              color: backgroundColor,
-              child: _coustRequest(new CoustDetiles(
-                  transform.requestName,
-                  transform.requestPhone,
-                  transform.request,
-                  DateTime.parse(transform.startDate),
-                  DateTime.parse(transform.endDate),
-                  transform.dliverName))),
+            color: BackgroundColor,
+            child: _CoustRequest(
+              new CoustDetiles(
+                'omar',
+                '07725338425',
+                '1',
+                DateTime.now(),
+                DateTime.now(),
+                DateTime.now(),
+                'kalar-shhedan',
+                '20000',
+                '2000',
+                '22000',
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  _coustRequest(CoustDetiles coustDetiles) {
+  _CoustRequest(CoustDetiles coustDetiles) {
     return _listofRequest(
-        coustDetiles.nameOfCoutomer,
-        coustDetiles.numberCoutomer,
-        coustDetiles.idRequest,
-        coustDetiles.startDateTime,
-        coustDetiles.endDateTime,
-        coustDetiles.nameOfDriver);
+        coustDetiles.NameOfCoutomer,
+        coustDetiles.NumberCoutomer,
+        coustDetiles.IdRequest,
+        coustDetiles.StartDateTime,
+        coustDetiles.EndDateTime,
+        coustDetiles.PefectTime,
+        coustDetiles.Address,
+        coustDetiles.PriceList,
+        coustDetiles.PriceOfDelivary,
+        coustDetiles.SumOfRequestList);
   }
 
   Widget _listofRequest(
-      String nameOfCoustomer,
-      numberOfCoutomer,
-      String idOfRequest,
-      DateTime dateTimestart,
-      DateTime dateTimeend,
-      String nameOfdrivar) {
+    String nameOfCoustomer,
+    NumberOfCoutomer,
+    String IdOfRequest,
+    DateTime StartDatetime,
+    DateTime EndDatetime,
+    DateTime Pefecttime,
+    String Address,
+    String PriceList,
+    String PriceOfDelivary,
+    String SumOfRequestList,
+  ) {
     return Padding(
       padding: EdgeInsets.all(4),
       child: Row(
@@ -63,6 +71,7 @@ class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
                     "ناوی داواکار     : ",
@@ -84,7 +93,7 @@ class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
                     width: 10,
                   ),
                   Text(
-                    numberOfCoutomer,
+                    NumberOfCoutomer,
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                 ],
@@ -96,7 +105,7 @@ class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
                     width: 10,
                   ),
                   Text(
-                    idOfRequest,
+                    IdOfRequest,
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                 ],
@@ -111,36 +120,76 @@ class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
                     width: 10,
                   ),
                   Text(
-                    '$dateTimestart',
+                    '$StartDatetime',
                     style: TextStyle(color: Colors.green, fontSize: 14),
                   ),
                 ],
               ), //start time
               Row(
                 children: <Widget>[
-                  Text("کاتی گەشتن    : ", style: lableOfRequestCoustomor),
+                  Text("کاتی خەڵمێنراو : ", style: lableOfRequestCoustomor),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    " بەنزیکی پاش $dateTimeend",
-                    style: TextStyle(color: Colors.red, fontSize: 14),
+                    "بەنزیکی پاش $EndDatetime خولەک ",
+                    style: TextStyle(color: Colors.red.shade600, fontSize: 12),
                   ),
                 ],
               ), // end time
               Row(
                 children: <Widget>[
-                  Text("ناوی شۆفێر     : ", style: lableOfRequestCoustomor),
+                  Text(
+                    "کاتی پێچوو     : ",
+                    style: lableOfRequestCoustomor,
+                  ),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    nameOfdrivar,
+                    '$Pefecttime خولەک ',
+                    style: TextStyle(color: Colors.yellowAccent, fontSize: 14),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Text("ناونیشان         : ", style: lableOfRequestCoustomor),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    Address,
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                 ],
               ),
-              _cardFooter(),
+              Row(
+                children: <Widget>[
+                  Text("کۆی لیست      : ", style: lableOfRequestCoustomor),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "$PriceList دینار ",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Text("تێچووی گواستنەوە  : ", style: lableOfRequestCoustomor),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "$PriceOfDelivary دینار ",
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                  ),
+                ],
+              ),
+
+              _cardFooter(SumOfRequestList),
               //name of drivar
             ],
           ),
@@ -149,48 +198,36 @@ class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
     );
   }
 
-  Widget _cardFooter() {
+  Widget _cardFooter(String SumOfRequestList) {
     return Padding(
       padding: const EdgeInsets.only(top: 8, left: 8),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
             width: 300,
             height: 0.2,
             color: Colors.grey.shade500,
           ),
-          Transform.translate(
-            offset: Offset(45, 0),
-            child: Row(
-              children: <Widget>[
-                FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      'کاتی دەرچوون',
-                      style:
-                          TextStyle(color: Colors.green.shade600, fontSize: 16),
-                    )),
-                FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      'کاتی گەشتن',
-                      style:
-                          TextStyle(color: Colors.red.shade600, fontSize: 16),
-                    )),
-              ],
-            ),
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: <Widget>[
+              Text(
+                "پوختەی لیست  : ",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "$SumOfRequestList دینار  ",
+                style: TextStyle(color: Colors.yellowAccent, fontSize: 18),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
-
-  /*Widget _drawDivider() {
-    return Container(
-      width: double.infinity,
-      height: 0.5,
-      color: Colors.grey.shade500,
-    );
-  }*/
 }

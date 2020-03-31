@@ -1,10 +1,9 @@
-import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sultan_delivery/Screens/FoodsRequest/DetilesFoodsRequest.dart';
 import 'package:sultan_delivery/Screens/data/Request.dart';
-import 'package:sultan_delivery/utilties/TextStyles.dart';
 import 'package:sultan_delivery/utilties/RequestsAPI.dart';
+import 'package:sultan_delivery/utilties/TextStyles.dart';
 import 'package:sultan_delivery/utilties/util.dart';
 
 class EditeFoodRequest extends StatefulWidget {
@@ -14,6 +13,7 @@ class EditeFoodRequest extends StatefulWidget {
 
 class _EditeFoodRequestState extends State<EditeFoodRequest> {
   RequestAPI _requestAPI = new RequestAPI();
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -22,14 +22,25 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.pink.shade600,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: IconsColorFoodRequest,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
             title: Text(
               'گۆڕانکاری لیستی داواکراوەکان',
               style: titleStyleFoodRequest,
             ),
             centerTitle: false,
+            automaticallyImplyLeading: false,
           ),
           body: Container(
-              color: backgroundColor,
+              color: BackgroundColor,
               child: FutureBuilder(
                   future: _requestAPI.fetchalldataById(phoneid),
                   builder: (context, AsyncSnapshot snapshot) {
@@ -70,45 +81,43 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
 
   Widget _detailesOFFoodRequest(String nameoffood, String countoffoodNum,
       String priceoffood, String foodId, String id) {
+    int _priceoffood ;
+    if(countoffoodNum != "0"){
+       _priceoffood = (int.parse(priceoffood)/int.parse(countoffoodNum)).round();
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
+        Text(
+          nameoffood,
+          style: NameOFFoodRequest,
+        ),
+        Text(
+          ' $priceoffood دینار',
+          style: TextStyle(color: Colors.white, fontSize: 14),
+        ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.add,
+                Icons.remove_circle_outline,
+              ),
+              color: Colors.red.shade600,
+              onPressed: (){_decrementCounter(id,int.parse(countoffoodNum),_priceoffood);},
+            ),
+            Container(
+                child: Text(
+              ' $countoffoodNum ',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            )),
+            IconButton(
+              icon: Icon(
+                Icons.add_circle_outline,
               ),
               color: Colors.green.shade600,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          DetilesFoodsRequest(int.parse(foodId))),
-                );
-              },
-            ),
-            Text(
-              nameoffood,
-              style: nameOFFoodRequest,
-            )
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Text(
-              '($priceoffoodدینار) ',
-              style: stylepriceoffoodRequest,
-            ),
-            IconButton(
-              tooltip: "$id",
-              icon: Icon(
-                Icons.restore_from_trash,
-              ),
-              color: Colors.red,
-              onPressed: () {
-                  _requestAPI.deleteWithURl(id).whenComplete(refresh);
+                _incrementCounter(id,int.parse(countoffoodNum),_priceoffood);
               },
             ),
           ],
@@ -117,9 +126,23 @@ class _EditeFoodRequestState extends State<EditeFoodRequest> {
     );
   }
 
-  FutureOr refresh() {
+  _incrementCounter(String id, int _counter, int price) {
     setState(() {
-
+      _counter++;
+      _requestAPI.addFoodRequest(id, _counter.toString(),(price*_counter).toString());
     });
   }
+
+  _decrementCounter(String id, int _counter, int price) {
+    setState(() {
+      _counter--;
+      if (_counter != 0) {
+        _requestAPI.addFoodRequest(id, _counter.toString(),(price*_counter).toString());
+      }else{
+        _requestAPI.deleteWithURl(id);
+      }
+    });
+
+  }
+
 }

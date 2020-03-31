@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sultan_delivery/Screens/FoodsRequest/FoodRequest.dart';
 import 'package:sultan_delivery/utilties/util.dart';
-import 'RequestsAPI.dart';
+import '../FoodsRequest/FoodRequest.dart';
+import '../../utilties/RequestsAPI.dart';
 
 class Shopingbasket extends StatefulWidget {
   @override

@@ -1,17 +1,25 @@
 class CoustDetiles {
-  String nameOfCoutomer;
-  String numberCoutomer;
-  String idRequest;
-  DateTime startDateTime;
-  DateTime endDateTime;
-  String nameOfDriver;
+  String NameOfCoutomer;
+  String NumberCoutomer;
+  String IdRequest;
+  DateTime StartDateTime;
+  DateTime EndDateTime;
+  DateTime PefectTime;
+  String Address;
+  String PriceList;
+  String PriceOfDelivary;
+  String SumOfRequestList;
 
   CoustDetiles(
-    this.nameOfCoutomer,
-    this.numberCoutomer,
-    this.idRequest,
-    this.startDateTime,
-    this.endDateTime,
-    this.nameOfDriver,
+    this.NameOfCoutomer,
+    this.NumberCoutomer,
+    this.IdRequest,
+    this.StartDateTime,
+    this.EndDateTime,
+    this.PefectTime,
+    this.Address,
+    this.PriceList,
+    this.PriceOfDelivary,
+    this.SumOfRequestList,
   );
 }

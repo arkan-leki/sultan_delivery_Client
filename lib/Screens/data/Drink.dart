@@ -1,8 +1,7 @@
 class Drink {
-  int id;
-  String food;
+  String id;
   String title;
   String price;
 
-  Drink(this.id, this.food, this.title, this.price);
+  Drink(this.id, this.title, this.price);
 }

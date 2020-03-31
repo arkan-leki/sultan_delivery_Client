@@ -1,5 +1,5 @@
 class Cat {
-  int id;
+  String id;
   String image;
   String nameEg;
   String nameKu;

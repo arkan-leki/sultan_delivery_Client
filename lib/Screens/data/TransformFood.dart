@@ -1,5 +1,5 @@
 class TransformFood {
-  int id;
+  String id;
   String dliver;
   String request;
   String dliverName;

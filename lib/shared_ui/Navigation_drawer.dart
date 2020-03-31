@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sultan_delivery/Screens/MainScreen.dart';
+import 'package:sultan_delivery/Screens/HomeScreen.dart';
 import 'package:sultan_delivery/Screens/DiscountFoods.dart';
+import 'package:sultan_delivery/Screens/MapDelivary.dart';
 import 'package:sultan_delivery/model/nav_menu.dart';
 import 'package:sultan_delivery/utilties/TextStyles.dart';
 import 'package:sultan_delivery/Screens/FoodsRequest/FoodRequest.dart';
 import 'package:sultan_delivery/Screens/Courtomer/WidgetCoustomer.dart';
-import 'package:sultan_delivery/Screens/Favorite.dart';
 import 'package:sultan_delivery/Screens/AboutSultan.dart';
 
 class NavegationDrawer extends StatefulWidget {
@@ -17,11 +17,11 @@ class _NavegationDrawerState extends State<NavegationDrawer> {
   List<IconButton> iconButton = [];
 
   List<NavMenuItem> navigationMenu = [
-    NavMenuItem(() => MainScrreen()),
+    NavMenuItem(() => HomeScreen()),
     NavMenuItem(() => DiscountFoods()),
     NavMenuItem(() => FoodRequest()),
     NavMenuItem(() => WidgetCoustomer()),
-    NavMenuItem(() => Favorite()),
+    NavMenuItem(() => MapDelivary()),
     NavMenuItem(() => AboutSultan()),
   ];
 
@@ -29,7 +29,7 @@ class _NavegationDrawerState extends State<NavegationDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: backgroundColor,
+        color: BackgroundColor,
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -40,13 +40,12 @@ class _NavegationDrawerState extends State<NavegationDrawer> {
                 icon: Icons.card_giftcard, text: 'داشکاندنەکان', position: 1),
             _createDrawerItem(
                 icon: Icons.shopping_cart, text: 'داواکراوەکان', position: 2),
-            //  Divider(),
             _createDrawerItem(
                 icon: Icons.format_list_bulleted,
                 text: 'لیستی گواستنەوە',
                 position: 3),
             _createDrawerItem(
-                icon: Icons.favorite, text: 'دڵخوازەکان', position: 4),
+                icon: Icons.location_on, text: 'نەخشە', position: 4),
             _createDrawerItem(
                 icon: Icons.info, text: 'دەربارەی ئێمە', position: 5),
           ],
@@ -84,13 +83,13 @@ class _NavegationDrawerState extends State<NavegationDrawer> {
   Widget _createDrawerItem(
       {IconData icon, String text, GestureTapCallback onTap, int position}) {
     return Container(
-      color: backgroundColor,
+      color: BackgroundColor,
       child: ListTile(
         title: Row(
           children: <Widget>[
             Icon(
               icon,
-              color: iconsColor,
+              color: IconsColor,
             ),
             Padding(
               padding: EdgeInsets.only(right: 8.0),

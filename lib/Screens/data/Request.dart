@@ -7,6 +7,6 @@ class RequestDetail {
   String totalPrice;
   String phoneid;
 
-  RequestDetail(this.id, this.food, this.foodTitle,
-      this.quantity, this.drink, this.totalPrice, this.phoneid);
+  RequestDetail(this.id, this.food, this.foodTitle, this.quantity, this.drink,
+      this.totalPrice, this.phoneid);
 }

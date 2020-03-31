@@ -1,14 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sultan_delivery/Screens/data/Request.dart';
-import 'package:sultan_delivery/Screens/transformfoods/TransformFoods.dart';
-import 'package:sultan_delivery/utilties/TextStyles.dart';
-import 'package:sultan_delivery/shared_ui/Navigation_drawer.dart';
-import 'package:sultan_delivery/Screens/FoodsRequest/EditeFoodRequest.dart';
 import 'package:sultan_delivery/utilties/RequestsAPI.dart';
+import 'package:sultan_delivery/utilties/TextStyles.dart';
+
+import 'package:sultan_delivery/Screens/FoodsRequest/EditeFoodRequest.dart';
 import 'package:sultan_delivery/utilties/util.dart';
+
+import '../TransformFoods.dart';
 
 class FoodRequest extends StatefulWidget {
   @override
@@ -34,7 +33,7 @@ class _FoodRequestState extends State<FoodRequest> {
       textDirection: TextDirection.rtl,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: backgroundColor,
+          backgroundColor: BackgroundColor,
           appBar: AppBar(
             backgroundColor: Colors.pink.shade600,
             title: Text(
@@ -46,7 +45,7 @@ class _FoodRequestState extends State<FoodRequest> {
               IconButton(
                   icon: Icon(
                     Icons.edit,
-                    color: iconsColorFoodRequest,
+                    color: IconsColorFoodRequest,
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -57,17 +56,18 @@ class _FoodRequestState extends State<FoodRequest> {
                   }),
             ],
           ),
-          drawer: NavegationDrawer(),
           body: Container(
             child: SingleChildScrollView(
               child: Wrap(
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 direction: Axis.horizontal,
                 children: <Widget>[
                   RefreshIndicator(
                     child: FutureBuilder(
                         future: list,
                         builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done &&
+                          if (snapshot.connectionState ==
+                                  ConnectionState.done &&
                               snapshot.hasData) {
                             return ListView.builder(
                                 shrinkWrap: true,
@@ -75,8 +75,12 @@ class _FoodRequestState extends State<FoodRequest> {
                                 itemBuilder: (context, index) {
                                   RequestDetail reuqest = snapshot.data[index];
                                   requests.add(reuqest.id);
-                                  return _detailesOFFoodRequest(reuqest.foodTitle,
-                                      reuqest.quantity, reuqest.totalPrice);
+                                  return _DetailesOFFoodRequest(
+                                      reuqest.foodTitle,
+                                      reuqest.quantity,
+                                      (int.parse(reuqest.totalPrice) /
+                                              int.parse(reuqest.quantity)).round()
+                                          .toString());
                                 });
                           } else if (snapshot.hasError) {
                             throw snapshot.error;
@@ -84,63 +88,30 @@ class _FoodRequestState extends State<FoodRequest> {
                             return Center(child: CircularProgressIndicator());
                           }
                         }),
-                      onRefresh: refreshList,
+                    onRefresh: refreshList,
                   ),
-                  _sumallpriceWidget(),
+                  _SumallpriceWidget(),
                 ],
               ),
             ),
           ),
-          bottomNavigationBar: BottomAppBar(
-            color: Colors.grey.shade900,
-            child: Wrap(
-              children: <Widget>[
-                Container(
-                  color: Colors.black12,
-                  padding: EdgeInsets.only(left: 125, right: 125, bottom: 6),
-                  child: Wrap(
-                    direction: Axis.horizontal,
-                    children: <Widget>[
-                      RaisedButton(
-                        color: Colors.pink.shade600,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(' پەسەندکردن',
-                                style: testButtonStulefoodRequest),
-                            Icon(
-                              Icons.done_all,
-                              color: Colors.white,
-                            ),
-                          ],
-                          //
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32),
-                        ),
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TransformFoods(requests)),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          bottomNavigationBar: _FooterButton(),
         ),
       ),
     );
   }
 
-  Widget _detailesOFFoodRequest(
+  Future<Null> refreshList() async {
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {
+      list = _requestAPI.fetchalldataById(phoneid);
+    });
+    return null;
+  }
+
+  Widget _DetailesOFFoodRequest(
       String nameoffood, String countoffoodNum, String priceoffood) {
     return Container(
-      height: 50,
       padding: EdgeInsets.only(left: 10, right: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,7 +120,7 @@ class _FoodRequestState extends State<FoodRequest> {
             children: <Widget>[
               Text(
                 nameoffood,
-                style: nameOFFoodRequest,
+                style: NameOFFoodRequest,
               )
             ],
           ),
@@ -157,11 +128,11 @@ class _FoodRequestState extends State<FoodRequest> {
             children: <Widget>[
               Text(
                 'x$countoffoodNum',
-                style: stylecountoffoodRequest,
+                style: StylecountoffoodRequest,
               ),
               Text(
                 '$priceoffoodدینار ',
-                style: stylepriceoffoodRequest,
+                style: StylepriceoffoodRequest,
               )
             ],
           ),
@@ -170,7 +141,7 @@ class _FoodRequestState extends State<FoodRequest> {
     );
   }
 
-  Widget _sumallpriceWidget() {
+  Widget _SumallpriceWidget() {
     return Column(
       children: <Widget>[
         _drawDivider(),
@@ -231,12 +202,30 @@ class _FoodRequestState extends State<FoodRequest> {
     );
   }
 
-  Future<Null> refreshList() async{
-    await Future.delayed(Duration(seconds: 3));
-    setState(() {
-      list =  _requestAPI.fetchalldataById(phoneid);
-    });
-    return null;
+  Widget _FooterButton() {
+    return BottomAppBar(
+      color: Colors.grey.shade900,
+      child: Container(
+        color: Colors.black12,
+        padding: EdgeInsets.only(left: 120, right: 120, bottom: 6),
+        child: FlatButton.icon(
+          icon: Icon(
+            Icons.done_all,
+            color: Colors.white,
+          ),
+          label: Text(' پەسەندکرند', style: testButtonStulefoodRequest),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+            side: BorderSide(color: Colors.pink.shade600),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TransformFoods(requests)),
+            );
+          },
+        ),
+      ),
+    );
   }
-
 }

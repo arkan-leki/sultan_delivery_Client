@@ -1,7 +1,7 @@
-import 'package:sultan_delivery/Screens/data/Cat.dart';
 import 'dart:convert' as convert;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../Screens/data/Cat.dart';
 import 'util.dart';
 
 class CatAPI {
@@ -14,7 +14,7 @@ class CatAPI {
       var jsonResponse = convert.jsonDecode(utf8.decode(response.bodyBytes));
       for (var data in jsonResponse) {
         Cat cat = Cat(
-            data['id'],
+            data['id'].toString(),
             data['image'].toString(),
             data['nameEg'].toString(),
             data['nameKu'].toString(),
