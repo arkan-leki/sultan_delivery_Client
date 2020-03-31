@@ -12,7 +12,6 @@ class Favourites extends StatefulWidget {
 }
 
 class _FavouritesState extends State<Favourites> {
-  @override
   bool valuecheck = false;
   int _counter = 0;
 

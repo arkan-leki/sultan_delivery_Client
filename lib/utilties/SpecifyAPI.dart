@@ -6,8 +6,9 @@ import 'util.dart';
 
 class SpecifyAPI {
   Future fetchalldata(String foodId) async {
-    String allCatAPI = apibse + drinkapi + "&food=" + foodId.toString();
+    String allCatAPI = apibse + specifyapi + "&food_id=" + foodId.toString();
     List<Specify> drinks = List<Specify>();
+    print(allCatAPI);
 
     var response = await http.get(allCatAPI);
     if (response.statusCode == 200) {

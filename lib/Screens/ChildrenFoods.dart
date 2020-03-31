@@ -28,7 +28,6 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
   RequestAPI _requestAPI = new RequestAPI();
   FoodAPI _foodAPI = new FoodAPI();
 
-  @override
   Food food;
   final int value = 0;
   bool valuecheck = false;
