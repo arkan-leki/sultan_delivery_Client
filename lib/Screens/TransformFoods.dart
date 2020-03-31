@@ -36,6 +36,10 @@ class _TransformFoodsState extends State<TransformFoods> {
 
   @override
   Widget build(BuildContext context) {
+    _requestAPI.fetchalldataByprice(phoneid).then((totalprice){
+      price = totalprice;
+    });
+    print(price);
     return Directionality(
         textDirection: TextDirection.rtl,
         child: SafeArea(

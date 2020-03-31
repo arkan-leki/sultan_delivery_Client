@@ -134,7 +134,7 @@ class RequestAPI {
     final baseUrl = apibse;
     final url = Uri.parse(baseUrl + "request_details/$id/");
     HashMap<String, dynamic> requestsMap = new HashMap();
-    requestsMap['status'] = true;
+    requestsMap['status'] = 'true';
     var response = await http.patch(url, body: requestsMap);
     if (response.statusCode != 200)
       return Future.error("error: status code ${response.statusCode}");
