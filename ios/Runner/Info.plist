@@ -42,8 +42,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
     <key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app requires access to your location for FilledStacks tutorial.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app requires access to your location for FilledStacks tutorial.</string>
+    <string>This app requires access to your location for FilledStacks tutorial.</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app requires access to your location for FilledStacks tutorial.</string>
 </dict>
 </plist>

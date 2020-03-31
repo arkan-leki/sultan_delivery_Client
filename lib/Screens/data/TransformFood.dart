@@ -9,6 +9,8 @@ class TransformFood {
   bool status;
   String requestPhoneid;
   String requestPhone;
+  String requestPrice;
+  String requestAddress;
 
   TransformFood(
       this.id,
@@ -20,5 +22,8 @@ class TransformFood {
       this.endDate,
       this.status,
       this.requestPhoneid,
-      this.requestPhone);
+      this.requestPhone,
+      this.requestPrice,
+      this.requestAddress,
+      );
 }

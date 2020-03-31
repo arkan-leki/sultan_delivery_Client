@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:sultan_delivery/Screens/data/CoustDetiles.dart';
+import 'package:sultan_delivery/Screens/data/TransformFood.dart';
 import 'package:sultan_delivery/utilties/TextStyles.dart';
 
 class ListOfCoustomerRequest extends StatefulWidget {
+  final TransformFood transform;
+  ListOfCoustomerRequest(TransformFood transform) : this.transform = transform;
+
   @override
-  _ListOfCoustomerRequestState createState() => _ListOfCoustomerRequestState();
+  _ListOfCoustomerRequestState createState() =>
+      _ListOfCoustomerRequestState(transform);
 }
 
 class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
+  final TransformFood transform;
+
+  _ListOfCoustomerRequestState(this.transform);
+
   CoustDetiles coustdetiles;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -19,16 +29,16 @@ class _ListOfCoustomerRequestState extends State<ListOfCoustomerRequest> {
             color: BackgroundColor,
             child: _CoustRequest(
               new CoustDetiles(
-                'omar',
-                '07725338425',
-                '1',
+                transform.requestName,
+                transform.requestPhone,
+                transform.request,
+                DateTime.parse(transform.startDate),
                 DateTime.now(),
-                DateTime.now(),
-                DateTime.now(),
-                'kalar-shhedan',
-                '20000',
+                DateTime.parse(transform.endDate),
+                transform.requestAddress,
+                transform.requestPrice,
                 '2000',
-                '22000',
+                (int.parse(transform.requestPrice)+2000).toString(),
               ),
             ),
           ),

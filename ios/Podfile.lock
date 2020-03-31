@@ -2,26 +2,61 @@ PODS:
   - device_id (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_plugin_android_lifecycle (0.0.1):
+    - Flutter
+  - google_maps_flutter (0.0.1):
+    - Flutter
+    - GoogleMaps
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
+    - GoogleMaps/Base
   - location (0.0.1):
+    - Flutter
+  - permission (0.0.1):
+    - Flutter
+  - "permission_handler (4.4.0+hotfix.2)":
     - Flutter
 
 DEPENDENCIES:
   - device_id (from `.symlinks/plugins/device_id/ios`)
   - Flutter (from `Flutter`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
+  - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - permission (from `.symlinks/plugins/permission/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  trunk:
+    - GoogleMaps
 
 EXTERNAL SOURCES:
   device_id:
     :path: ".symlinks/plugins/device_id/ios"
   Flutter:
     :path: Flutter
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
+  google_maps_flutter:
+    :path: ".symlinks/plugins/google_maps_flutter/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  permission:
+    :path: ".symlinks/plugins/permission/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
   device_id: 4a0bf078741a3eec6ba0e6cc72e786395d5991b0
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_plugin_android_lifecycle: 47de533a02850f070f5696a623995e93eddcdb9b
+  google_maps_flutter: d0dd62f5a7d39bae61057eb9f52dd778d99c7c6c
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
+  permission: c186483e23779d53def6b55986323494927c22c8
+  permission_handler: d5d46b2ca93671e8dcf870b949e304c7ddb65ad0
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 

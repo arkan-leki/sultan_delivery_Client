@@ -14,7 +14,7 @@ class TransformAPI {
       var jsonResponse = convert.jsonDecode(utf8.decode(response.bodyBytes));
       for (var data in jsonResponse) {
         TransformFood transform = new TransformFood(
-          data['id'],
+          data['id'].toString(),
           data['dliver_id'].toString(),
           data['request_id'].toString(),
           data['dliver_name'],
@@ -24,6 +24,8 @@ class TransformAPI {
           data['status'],
           data['request_phoneid'],
           data['request_phone'],
+          data['request_total_price'],
+          data['request_address'],
         );
         transforms.add(transform);
       }
