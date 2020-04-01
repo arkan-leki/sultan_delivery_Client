@@ -14,7 +14,7 @@ class FoodAPI {
       var jsonResponse = convert.jsonDecode(utf8.decode(response.bodyBytes));
       for (var data in jsonResponse) {
         Food cat = new Food(
-            data['id'],
+            data['id'].toString(),
             data['image'],
             data['price'],
             data['disprice'],

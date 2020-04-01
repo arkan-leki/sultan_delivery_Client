@@ -84,6 +84,19 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
                           itemBuilder: (context, index) {
                             Food food = snapshot.data[index];
                             return Container(
+                              decoration: new BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade800,
+                                    blurRadius: 20.0, // has the effect of softening the shadow
+                                    spreadRadius: 5.0, // has the effect of extending the shadow
+                                    offset: Offset(
+                                      10.0, // horizontal, move right 10
+                                      10.0, // vertical, move down 10
+                                    ),
+                                  )
+                                ],
+                              ),
                               width: MediaQuery.of(context).size.width * 0.8,
                               child: Wrap(
                                 direction: Axis.horizontal,
