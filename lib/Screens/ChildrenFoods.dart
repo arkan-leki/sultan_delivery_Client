@@ -174,7 +174,7 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
                 onPressed: () {
                   requestsMap['food'] = foodId;
                   requestsMap['quantity'] = _counter.toString();
-                  requestsMap['drinks'] = selectedDrinks;
+                  requestsMap['specify'] = selectedDrinks;
                   requestsMap['total_price'] = (_counter * price).toString();
                   requestsMap['phoneid'] = phoneid;
                   _requestAPI.insertdata(requestsMap).whenComplete(refresh);
@@ -225,7 +225,9 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
 
 
   FutureOr refresh() {
-    setState(() {});
+    setState(() {
+      selectedDrinks = [];
+    });
   }
 
   Widget _drawTitle(String title, String subtitle, String detiles) {

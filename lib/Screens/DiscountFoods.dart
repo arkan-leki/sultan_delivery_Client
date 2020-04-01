@@ -261,7 +261,7 @@ class _DiscountFoodsState extends State<DiscountFoods> {
                 onPressed: () {
                   requestsMap['food'] = foodId;
                   requestsMap['quantity'] = _counter.toString();
-                  requestsMap['drinks'] = selectedDrinks;
+                  requestsMap['specify'] = selectedDrinks;
                   requestsMap['total_price'] = (_counter * price).toString();
                   requestsMap['phoneid'] = phoneid;
                   _requestAPI.insertdata(requestsMap).whenComplete(refresh);
