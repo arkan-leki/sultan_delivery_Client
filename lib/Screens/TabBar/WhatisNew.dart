@@ -28,9 +28,101 @@ class _WhatisNewState extends State<WhatisNew> {
   ];
   Random random = new Random();
 
+  SliverPersistentHeader makeHeader(String headerText) {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: _SliverAppBarDelegate(
+          child: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: Container(
+          color: Theme.of(context).primaryColor,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(headerText,
+                    style: TextStyle(color: Colors.white, fontSize: 20.0))
+              ],
+            ),
+          ),
+        ),
+      )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Container(
+      color: Colors.grey.shade900,
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text('Reklam'),
+            backgroundColor: Colors.green,
+            expandedHeight: MediaQuery.of(context).size.height * 0.08,
+            flexibleSpace: FlexibleSpaceBar(
+              background:
+                  Image.asset('assets/images/burgger.jpg', fit: BoxFit.cover),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: FutureBuilder(
+              future: _foodAPI.fetchalldata(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    child: CarouselSlider.builder(
+                      itemCount: snapshot.data.length,
+                      aspectRatio: 3 / 2,
+                      viewportFraction: 0.99,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(seconds: 3),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      pauseAutoPlayOnTouch: Duration(seconds: 3),
+                      enlargeCenterPage: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int itemIndex) =>
+                          _viewAllFoods(snapshot.data[itemIndex].image,
+                              snapshot.data[itemIndex].title),
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  throw snapshot.error;
+                }
+                // By default, show a loading spinner.
+                return new Container(
+                  child: Center(child: new CircularProgressIndicator()),
+                );
+              },
+            ),
+          ),
+          makeHeader('خۆشترینه‌كان'),
+          SliverPadding(
+            padding: EdgeInsets.all(8.0),
+            sliver: Container(
+              child: getData(),
+            ),
+          ),
+          makeHeader('نوێترینەکان'),
+          SliverPadding(
+            padding: EdgeInsets.all(8.0),
+            sliver: Container(
+              child: getData2(),
+            ),
+          ),
+        ],
+      ),
+    );
+    /*return SingleChildScrollView(
       child: Container(
         // padding: EdgeInsets.only(top: 10),
         color: Colors.grey.shade900,
@@ -46,10 +138,10 @@ class _WhatisNewState extends State<WhatisNew> {
           ],
         ),
       ),
-    );
+    );*/
   }
 
-  Widget _drawHeader() {
+  /* Widget _drawHeader() {
     return Column(children: <Widget>[
       Container(
         padding: EdgeInsets.only(top: 4, bottom: 4),
@@ -171,7 +263,6 @@ class _WhatisNewState extends State<WhatisNew> {
                                 horizontal: 4.0, vertical: 4.0),
                             height: 800,
                             child: ListView.builder(
-
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (context, index) {
                                   Food food = snapshot.data[index];
@@ -192,7 +283,7 @@ class _WhatisNewState extends State<WhatisNew> {
         ],
       ),
     );
-  }
+  }*/
 
   Widget _drawSingleRow(String img, String title) {
     return Padding(
@@ -251,7 +342,7 @@ class _WhatisNewState extends State<WhatisNew> {
     );
   }
 
-  Widget _drawDivider() {
+/*  Widget _drawDivider() {
     return Container(
       width: double.infinity,
       height: 1,
@@ -267,10 +358,9 @@ class _WhatisNewState extends State<WhatisNew> {
         style: TextStyle(fontSize: 14, color: Colors.amber),
       ),
     );
-  }
+  }*/
 
-  Widget _drawRecentUppdateCard(
-      String nameoffoods, String sutitlefoods, Color color) {
+  Widget _drawRecentUppdateCard(String nameoffoods, String sutitlefoods, Color color) {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Container(
@@ -362,7 +452,7 @@ class _WhatisNewState extends State<WhatisNew> {
     );
   }
 
-  _Reklam(String PehImgeReklam) {
+  /*_Reklam(String PehImgeReklam) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.08,
@@ -381,7 +471,7 @@ class _WhatisNewState extends State<WhatisNew> {
       ),
     );
   }
-
+*/
   _viewAllFoods(String pathImges, String namefoods) {
     return Container(
       padding: EdgeInsets.only(left: 4, right: 4),
@@ -417,5 +507,113 @@ class _WhatisNewState extends State<WhatisNew> {
         ],
       ),
     );
+  }
+
+  Widget getData() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          /// To convert this infinite list to a list with "n" no of items,
+          /// uncomment the following line:
+          /// if (index > n) return null;
+          return FutureBuilder(
+            future: _foodAPI.fetchalldata(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                    decoration: new BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade800,
+                          blurRadius:
+                              20.0, // has the effect of softening the shadow
+                          spreadRadius:
+                              5.0, // has the effect of extending the shadow
+                          offset: Offset(
+                            10.0, // horizontal, move right 10
+                            20.0, // vertical, move down 10
+                          ),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Card(
+                            color: Colors.grey.shade900,
+                            child: _drawSingleRow(snapshot.data[index].image,
+                                snapshot.data[index].title))));
+              } else {
+                // By default, show a loading spinner.
+                return new Container(
+                  child: Center(child: new CircularProgressIndicator()),
+                );
+              }
+            },
+          );
+        },
+        childCount: 2,
+      ),
+    );
+  }
+
+  Widget getData2() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          /// To convert this infinite list to a list with "n" no of items,
+          /// uncomment the following line:
+          /// if (index > n) return null;
+          return FutureBuilder(
+            future: _foodAPI.fetchalldata(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                    child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Card(
+                            color: Colors.grey.shade900,
+                            child: _drawRecentUppdateCard(
+                                snapshot.data[index].title,
+                                snapshot.data[index].subtitle,
+                                colors[random.nextInt(colors.length)]))));
+              } else {
+                // By default, show a loading spinner.
+                return new Container(
+                  child: Center(child: new CircularProgressIndicator()),
+                );
+              }
+            },
+          );
+        },
+        childCount: 2,
+      ),
+    );
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  final PreferredSize child;
+
+  _SliverAppBarDelegate({this.child});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    // TODO: implement build
+    return child;
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => child.preferredSize.height;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => child.preferredSize.height;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    // TODO: implement shouldRebuild
+    return false;
   }
 }
