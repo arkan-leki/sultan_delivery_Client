@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
 import 'package:sultan_delivery/Screens/data/Food.dart';
+import 'package:sultan_delivery/utilties/CatsAPI.dart';
 import 'package:sultan_delivery/utilties/FoodsAPI.dart';
 
 class WhatisNew extends StatefulWidget {
@@ -28,6 +29,8 @@ class _WhatisNewState extends State<WhatisNew> {
   ];
   Random random = new Random();
 
+  CatAPI _catAPI = new CatAPI();
+
   SliverPersistentHeader makeHeader(String headerText) {
     return SliverPersistentHeader(
       pinned: true,
@@ -35,7 +38,7 @@ class _WhatisNewState extends State<WhatisNew> {
           child: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: Container(
-          color: Theme.of(context).primaryColor,
+          color: Colors.orange,
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
@@ -55,7 +58,7 @@ class _WhatisNewState extends State<WhatisNew> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey.shade900,
+      color: Colors.white,
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -69,7 +72,7 @@ class _WhatisNewState extends State<WhatisNew> {
           ),
           SliverToBoxAdapter(
             child: FutureBuilder(
-              future: _foodAPI.fetchalldata(),
+              future: _catAPI.fetchalldata(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
@@ -92,7 +95,7 @@ class _WhatisNewState extends State<WhatisNew> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int itemIndex) =>
                           _viewAllFoods(snapshot.data[itemIndex].image,
-                              snapshot.data[itemIndex].title),
+                              snapshot.data[itemIndex].nameKu),
                     ),
                   );
                 } else if (snapshot.hasError) {
@@ -360,14 +363,14 @@ class _WhatisNewState extends State<WhatisNew> {
     );
   }*/
 
-  Widget _drawRecentUppdateCard(String nameoffoods, String sutitlefoods, Color color) {
+  Widget _drawRecentUppdateCard(String image, String nameoffoods, String sutitlefoods, Color color) {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Container(
         decoration: new BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade800,
+              color: Colors.amberAccent,
               blurRadius: 20.0, // has the effect of softening the shadow
               spreadRadius: 5.0, // has the effect of extending the shadow
               offset: Offset(
@@ -380,21 +383,21 @@ class _WhatisNewState extends State<WhatisNew> {
             begin: FractionalOffset.topCenter,
             end: FractionalOffset.bottomCenter,
             colors: [
-              Colors.black.withOpacity(0.0),
-              Colors.black54,
+              Colors.white.withOpacity(0.0),
+              Colors.white30,
             ],
             stops: [0.95, 5.0],
           ),
         ),
         child: Card(
-          color: Colors.grey.shade900,
+          color: Colors.grey.shade200,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: ExactAssetImage('assets/images/pizza.png'),
+                    image: Image.network(image).image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -426,7 +429,7 @@ class _WhatisNewState extends State<WhatisNew> {
                 ),
                 child: Text(
                   sutitlefoods,
-                  style: TextStyle(color: Colors.grey, fontSize: 18),
+                  style: TextStyle(color: Colors.deepOrange, fontSize: 18),
                 ),
               ),
               Padding(
@@ -524,14 +527,14 @@ class _WhatisNewState extends State<WhatisNew> {
                     decoration: new BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.shade800,
+                          color: Colors.grey.shade500,
                           blurRadius:
                               20.0, // has the effect of softening the shadow
                           spreadRadius:
                               5.0, // has the effect of extending the shadow
                           offset: Offset(
                             10.0, // horizontal, move right 10
-                            20.0, // vertical, move down 10
+                            10.0, // vertical, move down 10
                           ),
                         )
                       ],
@@ -539,7 +542,7 @@ class _WhatisNewState extends State<WhatisNew> {
                     child: Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Card(
-                            color: Colors.grey.shade900,
+                            color: Colors.deepOrange,
                             child: _drawSingleRow(snapshot.data[index].image,
                                 snapshot.data[index].title))));
               } else {
@@ -571,8 +574,9 @@ class _WhatisNewState extends State<WhatisNew> {
                     child: Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Card(
-                            color: Colors.grey.shade900,
+                            color: Colors.orange,
                             child: _drawRecentUppdateCard(
+                                snapshot.data[index].image,
                                 snapshot.data[index].title,
                                 snapshot.data[index].subtitle,
                                 colors[random.nextInt(colors.length)]))));
