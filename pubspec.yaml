@@ -34,6 +34,7 @@ dependencies:
   location: ^2.3.5
   permission: ^0.1.7
   draggable_scrollbar: 0.0.4
+  smooth_star_rating: ^1.0.4+2
   permission_handler: '^4.4.0+hotfix.2'
 
 dev_dependencies:

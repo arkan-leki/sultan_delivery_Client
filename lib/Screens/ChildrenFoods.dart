@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:sultan_delivery/Screens/data/Food.dart';
 import 'package:sultan_delivery/utilties/FoodsAPI.dart';
 import 'package:sultan_delivery/utilties/RequestsAPI.dart';
@@ -34,6 +35,8 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
   int _counter = 0;
 
   final String catId;
+
+  var rating = 2.5;
 
   _ChildrenFoodsState(this.catId);
 
@@ -300,14 +303,20 @@ class _ChildrenFoodsState extends State<ChildrenFoods> {
                     // color: Colors.grey,
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: List.generate(5, (index) {
-                      return Icon(
-                        index < value ? Icons.star : Icons.star_border,
-                        color: Colors.amber,
-                      );
-                    }),
+                  child: SmoothStarRating(
+                      allowHalfRating: false,
+                      onRatingChanged: (v) {
+                        rating = v;
+                        setState(() {});
+                      },
+                      starCount: 5,
+                      rating: rating,
+                      size: 30.0,
+                      filledIconData: Icons.star,
+                      halfFilledIconData: Icons.star_half,
+                      color: Colors.yellow,
+                      borderColor: Colors.amber,
+                      spacing:0.0
                   ),
                 ),
               ),

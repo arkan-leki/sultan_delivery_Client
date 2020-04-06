@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sultan_delivery/Screens/Courtomer/shoping_basket.dart';
 import 'package:sultan_delivery/shared_ui/Navigation_drawer.dart';
 import 'package:sultan_delivery/utilties/TextStyles.dart';
 
@@ -34,57 +35,59 @@ class _HomeScreenState extends State<HomeScreen>
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: AppbarColor,
-            iconTheme: IconThemeData(
-              color: Colors.black, //change your color here
-            ),
-            title: Text(
-              'فۆرمی سەرەکی',
-              style: TextStyle(color: Colors.black, fontSize: 24),
-            ),
-            centerTitle: false,
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(
-                    Icons.search,
-                  ),
-                  onPressed: () {}),
-            ],
-            bottom: TabBar(
-              indicatorColor: Colors.white,
-              tabs: [
-                Tab(
-                  icon: Icon(
-                    Icons.new_releases,
-                    color: Colors.black,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.fastfood,
-                    color: Colors.black,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.favorite,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-              controller: _tabController,
-            ),
+        appBar: AppBar(
+          backgroundColor: AppbarColor,
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
           ),
-          drawer: NavegationDrawer(),
-          body: TabBarView(
-            children: <Widget>[
-              WhatisNew(),
-              ParentFoodsList(),
-              Favourites(),
+          title: Text(
+            'فۆرمی سەرەکی',
+            style: TextStyle(color: Colors.black, fontSize: 24),
+          ),
+          centerTitle: false,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.search,
+                ),
+                onPressed: () {}),
+          ],
+          bottom: TabBar(
+            indicatorColor: Colors.white,
+            tabs: [
+              Tab(
+                icon: Icon(
+                  Icons.new_releases,
+                  color: Colors.black,
+                ),
+              ),
+              Tab(
+                icon: Icon(
+                  Icons.fastfood,
+                  color: Colors.black,
+                ),
+              ),
+              Tab(
+                icon: Icon(
+                  Icons.favorite,
+                  color: Colors.black,
+                ),
+              ),
             ],
             controller: _tabController,
-          )),
+          ),
+        ),
+        drawer: NavegationDrawer(),
+        body: TabBarView(
+          children: <Widget>[
+            WhatisNew(),
+            ParentFoodsList(),
+            Favourites(),
+          ],
+          controller: _tabController,
+        ),
+        floatingActionButton: Shopingbasket(),
+      ),
     );
   }
 }

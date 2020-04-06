@@ -1,12 +1,16 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:sultan_delivery/Screens/data/Food.dart';
 import 'package:sultan_delivery/utilties/CatsAPI.dart';
 import 'package:sultan_delivery/utilties/FoodsAPI.dart';
+import 'package:sultan_delivery/utilties/RequestsAPI.dart';
+import 'package:sultan_delivery/utilties/util.dart';
 
 class WhatisNew extends StatefulWidget {
   @override
@@ -17,7 +21,7 @@ class _WhatisNewState extends State<WhatisNew> {
   String b =
       "ۆڤاری شۆنێن جەمپ لە ساڵی ١٩٩٩دا دەستی بە بڵاوکردنەوەی ناروتۆ کرد و ھەفتانە بەردەوام بوو تا ساڵی ٢٠١٤. سەرتاپای چیرۆکەکە دابەش دەبێت بەسەر ٧٢ پەرتووکی جۆری تانکۆبۆن. ";
 
-  final int value = 0;
+  final int value = 5;
   FoodAPI _foodAPI = new FoodAPI();
 
   List colors = [
@@ -30,6 +34,11 @@ class _WhatisNewState extends State<WhatisNew> {
   Random random = new Random();
 
   CatAPI _catAPI = new CatAPI();
+
+  double rating = 2.5;
+
+  RequestAPI _requestAPI = new RequestAPI();
+  HashMap<String, dynamic> requestsMap = new HashMap();
 
   SliverPersistentHeader makeHeader(String headerText) {
     return SliverPersistentHeader(
@@ -288,7 +297,7 @@ class _WhatisNewState extends State<WhatisNew> {
     );
   }*/
 
-  Widget _drawSingleRow(String img, String title) {
+  Widget _drawSingleRow(String img, String title, String id, String price) {
     return Padding(
       padding: const EdgeInsets.all(4),
       child: Row(
@@ -315,6 +324,14 @@ class _WhatisNewState extends State<WhatisNew> {
                       fontWeight: FontWeight.bold),
                   textAlign: TextAlign.start,
                 ),
+                Text(
+                  price,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.start,
+                ),
                 SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -324,16 +341,30 @@ class _WhatisNewState extends State<WhatisNew> {
                         Icons.shopping_cart,
                       ),
                       color: Colors.green,
-                      onPressed: () {},
+                      onPressed: () {
+                        requestsMap['food'] = id;
+                        requestsMap['quantity'] = "1";
+                        requestsMap['specify'] = [];
+                        requestsMap['total_price'] =  price ;
+                        requestsMap['phoneid'] = phoneid;
+                        _requestAPI.insertdata(requestsMap).whenComplete((){
+                        });
+                      },
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(5, (index) {
-                        return Icon(
-                          index < value ? Icons.star : Icons.star_border,
-                          color: Colors.amber,
-                        );
-                      }),
+                    SmoothStarRating(
+                        allowHalfRating: false,
+                        onRatingChanged: (v) {
+                          rating = v;
+                          setState(() {});
+                        },
+                        starCount: 5,
+                        rating: rating,
+                        size: 30.0,
+                        filledIconData: Icons.star,
+                        halfFilledIconData: Icons.star_half,
+                        color: Colors.yellow,
+                        borderColor: Colors.amber,
+                        spacing:0.0
                     ),
                   ],
                 ),
@@ -544,7 +575,7 @@ class _WhatisNewState extends State<WhatisNew> {
                         child: Card(
                             color: Colors.deepOrange,
                             child: _drawSingleRow(snapshot.data[index].image,
-                                snapshot.data[index].title))));
+                                snapshot.data[index].title,snapshot.data[index].id,snapshot.data[index].price))));
               } else {
                 // By default, show a loading spinner.
                 return new Container(
